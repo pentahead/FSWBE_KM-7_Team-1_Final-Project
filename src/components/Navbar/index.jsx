@@ -39,7 +39,7 @@ const NavigationBar = () => {
         <Navbar
           style={{
             background: "#FFFFFF",
-            boxShadow: "1px -20px 30px 0px grey",
+            boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.1)",
           }}
           key={expand}
           expand={expand}
@@ -103,10 +103,12 @@ const NavigationBar = () => {
                     <>
                       <Nav.Link as={Link} to="/#faq">
                         <IoIosList />
-                      </Nav.Link> History
+                      </Nav.Link>{" "}
+                      History
                       <Nav.Link as={Link} to="/#faq">
                         <IoIosNotificationsOutline />
-                      </Nav.Link> Notification
+                      </Nav.Link>{" "}
+                      Notification
                       <Nav.Link as={Link} to="/#faq">
                         <RxPerson /> Account
                       </Nav.Link>

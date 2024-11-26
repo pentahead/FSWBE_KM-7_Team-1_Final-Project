@@ -19,6 +19,8 @@ import { Route as rootRoute } from './routes/__root'
 const RegisterLazyImport = createFileRoute('/register')()
 const LoginLazyImport = createFileRoute('/login')()
 const IndexLazyImport = createFileRoute('/')()
+const PemesananIndexLazyImport = createFileRoute('/Pemesanan/')()
+const BayarIndexLazyImport = createFileRoute('/Bayar/')()
 
 // Create/Update Routes
 
@@ -39,6 +41,20 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const PemesananIndexLazyRoute = PemesananIndexLazyImport.update({
+  id: '/Pemesanan/',
+  path: '/Pemesanan/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/Pemesanan/index.lazy').then((d) => d.Route),
+)
+
+const BayarIndexLazyRoute = BayarIndexLazyImport.update({
+  id: '/Bayar/',
+  path: '/Bayar/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/Bayar/index.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -65,6 +81,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterLazyImport
       parentRoute: typeof rootRoute
     }
+    '/Bayar/': {
+      id: '/Bayar/'
+      path: '/Bayar'
+      fullPath: '/Bayar'
+      preLoaderRoute: typeof BayarIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/Pemesanan/': {
+      id: '/Pemesanan/'
+      path: '/Pemesanan'
+      fullPath: '/Pemesanan'
+      preLoaderRoute: typeof PemesananIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -74,12 +104,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/login': typeof LoginLazyRoute
   '/register': typeof RegisterLazyRoute
+  '/Bayar': typeof BayarIndexLazyRoute
+  '/Pemesanan': typeof PemesananIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/login': typeof LoginLazyRoute
   '/register': typeof RegisterLazyRoute
+  '/Bayar': typeof BayarIndexLazyRoute
+  '/Pemesanan': typeof PemesananIndexLazyRoute
 }
 
 export interface FileRoutesById {
@@ -87,14 +121,16 @@ export interface FileRoutesById {
   '/': typeof IndexLazyRoute
   '/login': typeof LoginLazyRoute
   '/register': typeof RegisterLazyRoute
+  '/Bayar/': typeof BayarIndexLazyRoute
+  '/Pemesanan/': typeof PemesananIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register'
+  fullPaths: '/' | '/login' | '/register' | '/Bayar' | '/Pemesanan'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register'
-  id: '__root__' | '/' | '/login' | '/register'
+  to: '/' | '/login' | '/register' | '/Bayar' | '/Pemesanan'
+  id: '__root__' | '/' | '/login' | '/register' | '/Bayar/' | '/Pemesanan/'
   fileRoutesById: FileRoutesById
 }
 
@@ -102,12 +138,16 @@ export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   LoginLazyRoute: typeof LoginLazyRoute
   RegisterLazyRoute: typeof RegisterLazyRoute
+  BayarIndexLazyRoute: typeof BayarIndexLazyRoute
+  PemesananIndexLazyRoute: typeof PemesananIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   LoginLazyRoute: LoginLazyRoute,
   RegisterLazyRoute: RegisterLazyRoute,
+  BayarIndexLazyRoute: BayarIndexLazyRoute,
+  PemesananIndexLazyRoute: PemesananIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -122,7 +162,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/login",
-        "/register"
+        "/register",
+        "/Bayar/",
+        "/Pemesanan/"
       ]
     },
     "/": {
@@ -133,6 +175,12 @@ export const routeTree = rootRoute
     },
     "/register": {
       "filePath": "register.lazy.jsx"
+    },
+    "/Bayar/": {
+      "filePath": "Bayar/index.lazy.jsx"
+    },
+    "/Pemesanan/": {
+      "filePath": "Pemesanan/index.lazy.jsx"
     }
   }
 }
